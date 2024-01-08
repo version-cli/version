@@ -15,8 +15,7 @@ type Datasource struct {
 }
 
 func Get(datasource string) (IDatasource, error) {
-	switch datasource {
-	case "docker":
+	if datasource == "docker" {
 		return &Docker{}, nil
 	}
 	return nil, errors.New("datasource not found")

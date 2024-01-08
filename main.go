@@ -4,14 +4,14 @@ Copyright © 2024 Koen van Zuijlen <8818390+kvanzuijlen@users.noreply.github.com
 package main
 
 import (
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 	"needs-a-name/cmd"
 	"os"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 func createLogger() *zap.Logger {
-	//return zap.Must(config.Build())
 	config := zap.NewProductionConfig()
 	if os.Getenv("LOG_LEVEL") == "debug" {
 		config = zap.NewDevelopmentConfig()

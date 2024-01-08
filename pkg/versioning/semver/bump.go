@@ -3,10 +3,17 @@ Copyright © 2024 Koen van Zuijlen <8818390+kvanzuijlen@users.noreply.github.com
 */
 package semver
 
-import "github.com/coreos/go-semver/semver"
+import (
+	"github.com/coreos/go-semver/semver"
+	"go.uber.org/zap"
+)
 
 func Bump(versionNumber string, versionLevel string, numberOfVersions int) (version *semver.Version, err error) {
 	version, err = parse(versionNumber)
+	if err != nil {
+		zap.L().Error("Error while parsing version", zap.String("versionNumber", versionNumber))
+		return nil, err
+	}
 	for i := 0; i < numberOfVersions; i++ {
 		version = bumpVersion(versionLevel, version)
 	}
@@ -17,13 +24,10 @@ func bumpVersion(versionLevel string, version *semver.Version) *semver.Version {
 	switch versionLevel {
 	case "major":
 		version.BumpMajor()
-		break
 	case "minor":
 		version.BumpMinor()
-		break
 	case "patch":
 		version.BumpPatch()
-		break
 	}
 	return version
 }

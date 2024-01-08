@@ -5,9 +5,10 @@ package semver
 
 import (
 	"fmt"
+	"slices"
+
 	"github.com/coreos/go-semver/semver"
 	"go.uber.org/zap"
-	"slices"
 )
 
 func Select(tags []string, numberOfVersions int, versionLevel string) (selectedVersions []*semver.Version) {
