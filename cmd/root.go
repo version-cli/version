@@ -4,8 +4,9 @@ Copyright © 2024 Koen van Zuijlen <8818390+kvanzuijlen@users.noreply.github.com
 package cmd
 
 import (
-	"go.uber.org/zap"
 	"os"
+
+	"go.uber.org/zap"
 
 	"github.com/spf13/cobra"
 )
@@ -40,18 +41,15 @@ func init() {
 }
 
 func setVersionLevel(_ *cobra.Command, _ []string) {
-	switch true {
+	switch {
 	case major:
 		versionLevel = "major"
-		break
 	case minor:
 		versionLevel = "minor"
-		break
 	case patch:
 		versionLevel = "patch"
-		break
 	default:
-		versionLevel = "minor"
+		versionLevel = "patch"
 	}
 
 	zap.L().Debug("Starting...",

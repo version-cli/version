@@ -5,9 +5,10 @@ package cmd
 
 import (
 	"fmt"
+	"needs-a-name/pkg/versioning/semver"
+
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
-	"needs-a-name/pkg/versioning/semver"
 )
 
 var bumpCmd = &cobra.Command{

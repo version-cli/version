@@ -5,9 +5,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"needs-a-name/pkg/datasource"
 	"needs-a-name/pkg/versioning/semver"
+
+	"github.com/spf13/cobra"
 )
 
 var (
