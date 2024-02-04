@@ -1,4 +1,4 @@
-module github.com/kvanzuijlen/version
+module github.com/version-cli/version
 
 go 1.21
 

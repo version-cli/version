@@ -4,7 +4,7 @@ Copyright © 2024 Koen van Zuijlen <8818390+kvanzuijlen@users.noreply.github.com
 package main
 
 import (
-	"github.com/kvanzuijlen/version/cmd"
+	"github.com/version-cli/version/cmd"
 	"os"
 
 	"go.uber.org/zap"

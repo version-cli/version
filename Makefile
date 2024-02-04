@@ -2,7 +2,7 @@ GO ?= go
 GOLANGCILINT ?= golangci-lint
 
 BINARY := version
-REPOSITORY ?= ghcr.io/kvanzuijlen/version
+REPOSITORY ?= ghcr.io/version-cli/version
 
 GO_MAJOR_VERSION = $(shell $(GO) version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
 GO_MINOR_VERSION = $(shell $(GO) version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f2)
@@ -22,7 +22,7 @@ clean:
 build: validate-go-version clean $(BINARY)
 
 $(BINARY):
-	CGO_ENABLED=0 $(GO) build -a -installsuffix cgo -ldflags="-X github.com/kvanzuijlen/version/cmd.VERSION=${VERSION}" -o $@
+	CGO_ENABLED=0 $(GO) build -a -installsuffix cgo -ldflags="-X github.com/version-cli/version/cmd.VERSION=${VERSION}" -o $@
 
 DOCKER_BUILD_PLATFORM         ?= linux/amd64,linux/arm64,linux/ppc64le,linux/arm/v7
 DOCKER_BUILDX_ARGS_LIST       ?= \
