@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} golang:1.21-bookworm@sha256:135ba6c2ae2a9a022f53f3eee24ef213bc62e876811cd9582b91045168206873 AS builder
+FROM --platform=${BUILDPLATFORM} golang:1.21-bookworm@sha256:efe985ec6ca642b035ea2896c7e975f0ec04063bcdb206bbff0d4e1c74ba3ff7 AS builder
 
 WORKDIR /src/
 
