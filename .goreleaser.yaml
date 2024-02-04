@@ -25,7 +25,7 @@ builds:
       - "6"
       - "7"
     ldflags:
-      - -s -w -X "github.com/kvanzuijlen/version/cmd.VERSION={{.Version}}"
+      - -s -w -X "github.com/version-cli/version/cmd.VERSION={{.Version}}"
 
 checksum:
   disable: false
@@ -53,10 +53,10 @@ changelog:
 
 brews:
   - repository:
-      owner: kvanzuijlen
+      owner: version-cli
       name: homebrew-version
     name: version
-    homepage: "https://github.com/kvanzuijlen/version"
+    homepage: "https://github.com/version-cli/version"
     description: "CLI tool to deal with versions"
     license: "GNU GPLv3"
     skip_upload: auto

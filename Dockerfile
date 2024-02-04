@@ -23,12 +23,12 @@ COPY --from=builder /src/version /bin/version
 
 ARG CREATED
 ARG AUTHORS="Koen van Zuijlen <8818390+kvanzuijlen@users.noreply.github.com>"
-ARG URL="https://github.com/kvanzuijlen/version"
-ARG DOCUMENTATION="https://github.com/kvanzuijlen/version"
-ARG SOURCE="https://github.com/kvanzuijlen/version"
+ARG URL="https://github.com/version-cli/version"
+ARG DOCUMENTATION="https://github.com/version-cli/version"
+ARG SOURCE="https://github.com/version-cli/version"
 ARG VERSION
 ARG REVISION
-ARG VENDOR="kvanzuijlen"
+ARG VENDOR="version-cli"
 ARG LICENSES="GNU GPLv3"
 ARG TITLE="version"
 ARG DESCRIPTION="A simple CLI tool to deal with version numbers."
