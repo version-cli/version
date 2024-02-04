@@ -1,0 +1,48 @@
+name-template: "v$RESOLVED_VERSION 🌈"
+tag-template: "v$RESOLVED_VERSION"
+categories:
+  - title: "🚀 Features"
+    labels:
+      - "kind:feature"
+      - "kind:enhancement"
+  - title: "🐛 Bug Fixes"
+    label: "kind:fix"
+  - title: "🧰 Maintenance"
+    label: "kind:chore"
+  - title: "⬆️ Dependencies"
+    label: "kind:dependencies"
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+change-title-escapes: '\<*_&'
+exclude-labels:
+  - "semver:none"
+version-resolver:
+  major:
+    labels:
+      - "semver:major"
+  minor:
+    labels:
+      - "semver:minor"
+  patch:
+    labels:
+      - "semver:patch"
+  default: patch
+template: |
+  ## Changes
+
+  $CHANGES
+autolabeler:
+  - label: "kind:chore"
+    title:
+      - "/chore/i"
+  - label: "kind:fix"
+    title:
+      - "/fix/i"
+  - label: "kind:dependencies"
+    title:
+      - "/dependencies/i"
+  - label: "kind:enhancement"
+    title:
+      - "/enhancement/i"
+  - label: "kind:feature"
+    title:
+      - "/feature/i"

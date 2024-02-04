@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+version: 1
+
+project_name: version
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+      - freebsd
+    goarch:
+      - arm64
+      - amd64
+      - arm
+      - "386"
+    goarm:
+      - "6"
+      - "7"
+    ldflags:
+      - -s -w -X "github.com/kvanzuijlen/version/cmd.VERSION={{.Version}}"
+
+checksum:
+  disable: false
+
+archives:
+  - format: tar.gz
+    # this name template makes the OS and Arch compatible with the results of `uname`.
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    # use zip for windows archives
+    format_overrides:
+      - goos: windows
+        format: zip
+
+universal_binaries:
+  - {}
+
+changelog:
+  skip: true
+
+brews:
+  - repository:
+      owner: kvanzuijlen
+      name: homebrew-version
+    name: version
+    homepage: "https://github.com/kvanzuijlen/version"
+    description: "CLI tool to deal with versions"
+    license: "GNU GPLv3"
+    skip_upload: auto
+    commit_author:
+      name: version
+      email: 8818390+kvanzuijlen@users.noreply.github.com
+    folder: Formula
+    install: |-
+      bin.install "version"
+    test: |
+      system "#{bin}/version -v"

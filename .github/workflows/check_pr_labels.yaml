@@ -1,0 +1,31 @@
+name: "Check Merge-able by label ✅"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+      - labeled
+      - unlabeled
+
+jobs:
+  fail-by-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if PR is labeled "do-not-merge"
+        if: contains(github.event.pull_request.labels.*.name, 'do-not-merge')
+        run: |
+          echo "This PR is labeled as do-not-merge!"
+          exit 1
+      - name: Fail if PR doesn't have SemVer label
+        if: "!contains(github.event.pull_request.labels.*.name, 'semver:major') && !contains(github.event.pull_request.labels.*.name, 'semver:minor') && !contains(github.event.pull_request.labels.*.name, 'semver:patch') && !contains(github.event.pull_request.labels.*.name, 'semver:none')"
+        run: |
+          echo "Every PR needs a semver label!"
+          exit 1
+      - name: Fail if PR doesn't have kind label
+        if: "!contains(github.event.pull_request.labels.*.name, 'kind:feature') && !contains(github.event.pull_request.labels.*.name, 'kind:enhancement') && !contains(github.event.pull_request.labels.*.name, 'kind:fix') && !contains(github.event.pull_request.labels.*.name, 'kind:bugfix') && !contains(github.event.pull_request.labels.*.name, 'kind:chore') && !contains(github.event.pull_request.labels.*.name, 'kind:dependencies')"
+        run: |
+          echo "Every PR needs a kind label!"
+          exit 1
