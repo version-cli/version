@@ -1,8 +1,9 @@
-module needs-a-name
+module github.com/kvanzuijlen/version
 
 go 1.21
 
 require (
+	github.com/coreos/go-semver v0.3.1
 	github.com/google/go-containerregistry v0.17.0
 	github.com/spf13/cobra v1.8.0
 	go.uber.org/zap v1.26.0
@@ -10,7 +11,6 @@ require (
 
 require (
 	github.com/containerd/stargz-snapshotter/estargz v0.15.1 // indirect
-	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/docker/cli v24.0.7+incompatible // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
 	github.com/docker/docker v24.0.7+incompatible // indirect

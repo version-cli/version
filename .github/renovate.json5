@@ -1,0 +1,22 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  semanticCommits: "auto",
+  dependencyDashboard: true,
+  enabledManagers: ["dockerfile", "gomod", "github-actions", "regex"],
+  customManagers: [
+    {
+      customType: "regex",
+      fileMatch: "^Dockerfile",
+      matchStrings: ['ARG BASE_IMAGE_DIGEST="(?<currentDigest>.*)"'],
+      depNameTemplate: "gcr.io/distroless/static",
+      currentValueTemplate: "nonroot",
+      datasourceTemplate: "docker",
+    },
+  ],
+  packageRules: [
+    {
+      matchDepNames: "gcr.io/distroless/static",
+      group: true,
+    },
+  ],
+}

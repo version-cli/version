@@ -5,8 +5,8 @@ package cmd
 
 import (
 	"fmt"
-	"needs-a-name/pkg/datasource"
-	"needs-a-name/pkg/versioning/semver"
+	"github.com/kvanzuijlen/version/pkg/datasource"
+	"github.com/kvanzuijlen/version/pkg/versioning/semver"
 
 	"github.com/spf13/cobra"
 )

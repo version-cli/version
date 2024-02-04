@@ -1,0 +1,31 @@
+name: Prettier
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          ref: ${{ github.head_ref }} # so PRs resolve to correct branch
+          fetch-depth: 0 # needed for only_changed below
+          persist-credentials: false
+      - name: Create GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@86576b355dd19da0519e0bdb63d8edb5bcf76a25 # v1.6.0
+        with:
+          app-id: ${{ secrets.VERSION_CLI_UPDATER_APP_ID }}
+          private-key: ${{ secrets.VERSION_CLI_UPDATER_PRIVATE_KEY }}
+      - name: Prettify code
+        uses: creyD/prettier_action@31355f8eef017f8aeba2e0bc09d8502b13dbbad1 # v4.3
+        with:
+          commit_message: "Prettier"
+          only_changed: True
+          github_token: ${{ steps.app-token.outputs.token }}
+          prettier_options: --write . # the `.` targets all files which prettier _can_ parse, and ignores all others

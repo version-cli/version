@@ -5,6 +5,7 @@ package datasource
 
 import (
 	"errors"
+	"go.uber.org/zap"
 )
 
 type IDatasource interface {
@@ -15,8 +16,13 @@ type Datasource struct {
 }
 
 func Get(datasource string) (IDatasource, error) {
-	if datasource == "docker" {
-		return &Docker{}, nil
+	datasources := map[string]func() IDatasource{
+		"docker": func() IDatasource { return &Docker{} },
 	}
-	return nil, errors.New("datasource not found")
+	datasourceFactory, exists := datasources[datasource]
+	if !exists {
+		return nil, errors.New("datasource not found")
+	}
+	zap.L().Debug("Found datasource", zap.String("datasource", datasource))
+	return datasourceFactory(), nil
 }

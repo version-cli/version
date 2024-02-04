@@ -5,15 +5,16 @@ package cmd
 
 import (
 	"fmt"
-	"needs-a-name/pkg/versioning/semver"
+	"github.com/kvanzuijlen/version/pkg/versioning/semver"
 
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
 
 var bumpCmd = &cobra.Command{
-	Use:   "bump VERSION",
-	Short: "Bumps the specified version number",
+	Use:     "bump VERSION",
+	Aliases: []string{"next"},
+	Short:   "Bumps the specified version number",
 	Long: `Bumps the specified version number with the specified version level.
 Can also be used to bump multiple levels with the --number flag`,
 	RunE: func(cmd *cobra.Command, args []string) (err error) {

@@ -16,11 +16,13 @@ var (
 	major, minor, patch bool
 	versionLevel        string
 	useSemver           bool
+	VERSION             string
 	rootCmd             = &cobra.Command{
 		Use:              "version",
 		Short:            "A tool to handle version numbers",
 		Long:             `A tool to handle version numbers, i.e. bumping versions and retrieving the latest version of a dependency.`,
 		PersistentPreRun: setVersionLevel,
+		Version:          VERSION,
 	}
 )
 
@@ -32,10 +34,10 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.PersistentFlags().IntVarP(&numberOfVersions, "number", "n", 1, "Amount of versions")
+	rootCmd.PersistentFlags().IntVarP(&numberOfVersions, "count", "c", 1, "Number of versions")
 	rootCmd.PersistentFlags().BoolVarP(&major, "major", "M", false, "Set version level to major")
-	rootCmd.PersistentFlags().BoolVarP(&minor, "minor", "m", true, "Set version level to minor")
-	rootCmd.PersistentFlags().BoolVarP(&patch, "patch", "p", false, "Set version level to patch")
+	rootCmd.PersistentFlags().BoolVarP(&minor, "minor", "m", false, "Set version level to minor")
+	rootCmd.PersistentFlags().BoolVarP(&patch, "patch", "p", true, "Set version level to patch")
 	rootCmd.MarkFlagsMutuallyExclusive("major", "minor", "patch")
 	rootCmd.PersistentFlags().BoolVarP(&useSemver, "semver", "S", true, "Use semver as the versioning type")
 }
