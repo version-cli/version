@@ -8,13 +8,13 @@ import (
 	"go.uber.org/zap"
 )
 
-func Bump(versionNumber string, versionLevel string, numberOfVersions int) (version *semver.Version, err error) {
+func Bump(versionNumber string, versionLevel string, count int) (version *semver.Version, err error) {
 	version, err = parse(versionNumber)
 	if err != nil {
 		zap.L().Error("Error while parsing version", zap.String("versionNumber", versionNumber))
 		return nil, err
 	}
-	for i := 0; i < numberOfVersions; i++ {
+	for i := 0; i < count; i++ {
 		version = bumpVersion(versionLevel, version)
 	}
 	return version, nil

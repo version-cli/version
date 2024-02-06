@@ -11,7 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func Select(tags []string, numberOfVersions int, versionLevel string) (selectedVersions []*semver.Version) {
+func Select(tags []string, count int, versionLevel string) (selectedVersions []*semver.Version) {
 	versions := semverSort(tags)
 
 	versionMap := make(map[string]*semver.Version)
@@ -24,7 +24,7 @@ func Select(tags []string, numberOfVersions int, versionLevel string) (selectedV
 		if _, exists := versionMap[key]; !exists {
 			versionMap[key] = version
 			selectedVersions = append(selectedVersions, version)
-			if len(selectedVersions) == numberOfVersions {
+			if len(selectedVersions) == count {
 				break
 			}
 		}

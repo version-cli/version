@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	numberOfVersions    int
+	count               int
 	major, minor, patch bool
 	versionLevel        string
 	useSemver           bool
@@ -34,12 +34,14 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.PersistentFlags().IntVarP(&numberOfVersions, "count", "c", 1, "Number of versions")
+	rootCmd.PersistentFlags().IntVarP(&count, "count", "c", 1, "Number of versions")
 	rootCmd.PersistentFlags().BoolVarP(&major, "major", "M", false, "Set version level to major")
 	rootCmd.PersistentFlags().BoolVarP(&minor, "minor", "m", false, "Set version level to minor")
 	rootCmd.PersistentFlags().BoolVarP(&patch, "patch", "p", true, "Set version level to patch")
 	rootCmd.MarkFlagsMutuallyExclusive("major", "minor", "patch")
+	rootCmd.MarkFlagsOneRequired("major", "minor", "patch")
 	rootCmd.PersistentFlags().BoolVarP(&useSemver, "semver", "S", true, "Use semver as the versioning type")
+	rootCmd.MarkFlagsOneRequired("semver")
 }
 
 func setVersionLevel(_ *cobra.Command, _ []string) {
@@ -56,6 +58,6 @@ func setVersionLevel(_ *cobra.Command, _ []string) {
 
 	zap.L().Debug("Starting...",
 		zap.String("version level", versionLevel),
-		zap.Int("number of versions", numberOfVersions),
+		zap.Int("number of versions", count),
 	)
 }
