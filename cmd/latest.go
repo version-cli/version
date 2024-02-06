@@ -28,7 +28,7 @@ If a different version level is specified, this command will return the latest n
 			if err != nil {
 				return err
 			}
-			versions := semver.Select(tags, numberOfVersions, versionLevel)
+			versions := semver.Select(tags, count, versionLevel)
 			for _, version := range versions {
 				fmt.Println(version)
 			}

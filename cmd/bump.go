@@ -18,7 +18,7 @@ var bumpCmd = &cobra.Command{
 	Long: `Bumps the specified version number with the specified version level.
 Can also be used to bump multiple levels with the --number flag`,
 	RunE: func(cmd *cobra.Command, args []string) (err error) {
-		version, err := semver.Bump(args[0], versionLevel, numberOfVersions)
+		version, err := semver.Bump(args[0], versionLevel, count)
 		if err != nil {
 			zap.L().Error(err.Error())
 			return err
