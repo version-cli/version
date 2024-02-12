@@ -49,7 +49,7 @@ universal_binaries:
   - {}
 
 changelog:
-  skip: true
+  disable: true
 
 brews:
   - repository:
