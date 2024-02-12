@@ -39,9 +39,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&minor, "minor", "m", false, "Set version level to minor")
 	rootCmd.PersistentFlags().BoolVarP(&patch, "patch", "p", true, "Set version level to patch")
 	rootCmd.MarkFlagsMutuallyExclusive("major", "minor", "patch")
-	rootCmd.MarkFlagsOneRequired("major", "minor", "patch")
 	rootCmd.PersistentFlags().BoolVarP(&useSemver, "semver", "S", true, "Use semver as the versioning type")
-	rootCmd.MarkFlagsOneRequired("semver")
 }
 
 func setVersionLevel(_ *cobra.Command, _ []string) {
