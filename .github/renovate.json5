@@ -1,8 +1,8 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   semanticCommits: "auto",
-  dependencyDashboard: true,
   enabledManagers: ["dockerfile", "gomod", "github-actions", "regex"],
+  extends: ["config:best-practices"],
   customManagers: [
     {
       customType: "regex",
@@ -11,6 +11,13 @@
       depNameTemplate: "gcr.io/distroless/static",
       currentValueTemplate: "nonroot",
       datasourceTemplate: "docker",
+    },
+    {
+      customType: "regex",
+      fileMatch: "(^|\\/)(?:workflow-templates|\\.github\\/(?:workflows|actions))\\/.+\\.ya?ml$",
+      matchStrings: [
+        "version: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s",
+      ],
     },
   ],
   packageRules: [
