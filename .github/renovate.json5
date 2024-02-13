@@ -23,9 +23,7 @@
   packageRules: [
     {
       matchDepNames: "gcr.io/distroless/static",
-      group: {
-        enabled: true,
-      },
+      groupName: "gcr.io/distroless/static",
     },
   ],
 }
