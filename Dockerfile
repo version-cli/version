@@ -17,7 +17,7 @@ RUN case ${TARGETPLATFORM} in \
     esac && \
     GOARCH=${GOARCH} VERSION=${VERSION} make build
 
-FROM gcr.io/distroless/static:nonroot@sha256:49af06135e8bbe8ddc46c1d28b0bd00961aae9c9ed090bbc0237f58e1462dd4b
+FROM gcr.io/distroless/static:nonroot@sha256:efea8b525e9deefb309c6ed41b8e69c85d901e0da30658e476e9f176f88c1b36
 
 COPY --from=builder /src/version /bin/version
 
@@ -33,7 +33,7 @@ ARG LICENSES="GNU GPLv3"
 ARG TITLE="version"
 ARG DESCRIPTION="A simple CLI tool to deal with version numbers."
 ARG BASE_IMAGE="gcr.io/distroless/static:nonroot"
-ARG BASE_IMAGE_DIGEST="sha256:49af06135e8bbe8ddc46c1d28b0bd00961aae9c9ed090bbc0237f58e1462dd4b"
+ARG BASE_IMAGE_DIGEST="sha256:efea8b525e9deefb309c6ed41b8e69c85d901e0da30658e476e9f176f88c1b36"
 
 LABEL authors="kvanzuijlen" \
     org.opencontainers.image.created=${CREATED} \
