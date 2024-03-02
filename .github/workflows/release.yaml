@@ -6,10 +6,8 @@ on:
 jobs:
   release:
     permissions:
-      contents: "write"
       id-token: "write"
       packages: "write"
-      pull-requests: "read"
     name: release
     runs-on: ubuntu-22.04
     steps:
@@ -40,8 +38,8 @@ jobs:
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: ghcr.io
-          username: ${{ secrets.VERSION_CLI_UPDATER_APP_ID }}
-          password: ${{ steps.app-token.outputs.token }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
         run: VERSION=${{ steps.draft_release.outputs.tag_name }} make docker-push
@@ -80,6 +78,6 @@ jobs:
         run: |
           gh release upload --clobber ${{ env.VERSION }} ${{ env.FILES }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           VERSION: ${{ steps.draft_release.outputs.tag_name }}
           FILES: dist/version_*.tar.gz dist/version_*.zip dist/version_*_checksums.txt
