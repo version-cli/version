@@ -18,13 +18,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Create GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@f2acddfb5195534d487896a656232b016a682f3c # v1.9.0
+        with:
+          app-id: ${{ secrets.VERSION_CLI_UPDATER_APP_ID }}
+          private-key: ${{ secrets.VERSION_CLI_UPDATER_PRIVATE_KEY }}
+
       - name: Draft release
         id: draft_release
         uses: release-drafter/release-drafter@3f0f87098bd6b5c5b9a36d49c41d998ea58f9348 # v6.0.0
         with:
           disable-autolabeler: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@0d103c3126aa41d772a8362f6aa67afac040f80c # v3.1.0
@@ -34,7 +41,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ steps.app-token.outputs.token }}
 
       - name: Build Docker image
         run: VERSION=${{ steps.draft_release.outputs.tag_name }} make docker-push
@@ -47,14 +54,7 @@ jobs:
           publish: true
           disable-autolabeler: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create GitHub App Token
-        id: app-token
-        uses: actions/create-github-app-token@f2acddfb5195534d487896a656232b016a682f3c # v1.9.0
-        with:
-          app-id: ${{ secrets.VERSION_CLI_UPDATER_APP_ID }}
-          private-key: ${{ secrets.VERSION_CLI_UPDATER_PRIVATE_KEY }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Checkout action code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
