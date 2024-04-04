@@ -42,8 +42,8 @@ autolabeler:
       - "/dependencies/i"
       - "/chore\\(deps\\)/i"
     files:
-      - '**/*'
-      - '!.github/workflows/**'
+      - "**/*"
+      - "!.github/workflows/**"
   - label: "kind:enhancement"
     title:
       - "/enhancement/i"
@@ -52,5 +52,5 @@ autolabeler:
       - "/feature/i"
   - label: "semver:none"
     files:
-      - '.github/**'
-      - '!**/*'
+      - ".github/**"
+      - "!**/*"
