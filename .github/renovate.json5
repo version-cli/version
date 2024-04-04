@@ -3,6 +3,7 @@
   semanticCommits: "auto",
   enabledManagers: ["dockerfile", "gomod", "github-actions", "custom.regex"],
   extends: ["config:best-practices"],
+  labels: ["semver:patch", "kind:dependencies"],
   customManagers: [
     {
       customType: "regex",
@@ -24,6 +25,10 @@
     {
       matchDepNames: "gcr.io/distroless/static",
       groupName: "gcr.io/distroless/static",
+    },
+    {
+      matchManagers: ["github-actions"],
+      labels: ["semver:none", "kind:chore"],
     },
   ],
 }
