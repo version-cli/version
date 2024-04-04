@@ -42,7 +42,6 @@ autolabeler:
       - "/dependencies/i"
       - "/chore\\(deps\\)/i"
     files:
-      - "**/*"
       - "!.github/workflows/**"
   - label: "kind:enhancement"
     title:
