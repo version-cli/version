@@ -33,13 +33,17 @@ template: |
 autolabeler:
   - label: "kind:chore"
     title:
-      - "/chore/i"
+      - "/chore(?!\(deps\))/i"
   - label: "kind:fix"
     title:
       - "/fix/i"
   - label: "kind:dependencies"
     title:
       - "/dependencies/i"
+      - "/chore\(deps\)/i"
+    files:
+      - '**/*'
+      - '!.github/workflows/**'
   - label: "kind:enhancement"
     title:
       - "/enhancement/i"
