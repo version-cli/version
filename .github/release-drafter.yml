@@ -50,3 +50,7 @@ autolabeler:
   - label: "kind:feature"
     title:
       - "/feature/i"
+  - label: "semver:none"
+    files:
+      - '.github/**'
+      - '!**/*'
