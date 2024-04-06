@@ -1,4 +1,4 @@
-name: Create release
+name: CI
 
 on:
   workflow_dispatch:
@@ -115,6 +115,8 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: poetry install --no-interaction
+      - name: Fetch gh-pages remote changes (if any)
+        run: git fetch origin gh-pages --depth=1
       - name: Deploy main docs
         if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
         run: poetry run mike deploy --push main
