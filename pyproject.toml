@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "docs"
+version = "0.0.0"
+description = ""
+authors = []
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+mkdocs = "^1.5.3"
+mkdocs-material = { version = "^9.5.12", extras = ["imaging"] }
+mike = "^2.0.0"
+mkdocs-git-revision-date-localized-plugin = "^1.2.4"
+mkdocs-git-committers-plugin-2 = "^2.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
