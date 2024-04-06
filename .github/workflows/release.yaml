@@ -2,14 +2,20 @@ name: Create release
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   release:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     permissions:
       id-token: "write"
       packages: "write"
     name: release
     runs-on: ubuntu-22.04
+    outputs:
+      tag_name: ${{ steps.draft_release.outputs.tag_name }}
     steps:
       - name: Checkout action code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -81,3 +87,44 @@ jobs:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           VERSION: ${{ steps.draft_release.outputs.tag_name }}
           FILES: dist/version_*.tar.gz dist/version_*.zip dist/version_*_checksums.txt
+
+  docs-deploy:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Git Credentials
+        run: |
+          git config user.name version-cli[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - name: Install Poetry
+        # renovate: datasource=github-tags depName=poetry packageName=python-poetry/poetry
+        run: pipx install poetry==1.8.2
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+          cache: "poetry"
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+      - run: poetry install --no-interaction
+      - name: Deploy main docs
+        if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
+        run: poetry run mike deploy --push main
+        env:
+          GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
+      - name: Deploy release docs
+        if: ${{ github.event_name == 'workflow_dispatch' && needs.release.result == 'success' }}
+        run: |-
+          FULL_TAG="${{ needs.release.outputs.tag_name }}"
+          TAG=$(echo "$FULL_TAG" | sed 's/\.[0-9]*$/\.x/')
+          poetry run mike deploy --push --update-aliases ${{ needs.release.outputs.tag_name }} latest
+        env:
+          GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}

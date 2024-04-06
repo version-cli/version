@@ -4,3 +4,4 @@ dist/
 
 # Ignore version binaries in root project-folder
 /version*
+/.cache/

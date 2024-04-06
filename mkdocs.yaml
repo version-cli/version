@@ -1,0 +1,156 @@
+site_name: Version
+site_description: "Documentation for Version"
+site_author: "version-cli"
+site_url: https://version-cli.app/
+copyright: >
+  Copyright &copy; 2024 version-cli -
+  <a href="#__consent">Change cookie settings</a>
+
+strict: true
+
+repo_name: version-cli/version
+repo_url: https://github.com/version-cli/version/
+edit_uri: https://github.com/version-cli/docs/edit/main/docs/
+
+watch:
+  - README.md
+
+use_directory_urls: true
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+
+remote_branch: gh-pages
+
+hooks:
+  - docs/mkdocs-hooks/custom-edit-url.py
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - getting-started/installation.md
+      - Use:
+          - getting-started/use/latest_versions.md
+          - getting-started/use/bump.md
+      - Optional:
+          - getting-started/github_action.md
+
+theme:
+  name: material
+  logo: assets/images/logo.svg
+  favicon: assets/images/logo.svg
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.instant.preview
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.path
+    - navigation.expand
+    - navigation.footer
+    - toc.follow
+    - navigation.top
+    - content.tabs.link
+    - content.tooltips
+    - content.code.copy
+    - content.tooltips
+    - content.action.edit
+    - content.action.view
+    - search.suggest
+    - search.highlight
+    - search.share
+
+plugins:
+  - search
+  - privacy
+  - social:
+      cards_layout_options:
+        background_color: "#D4AA01"
+        color: "#ffffff"
+#  - git-revision-date-localized:
+#      enable_creation_date: true
+#  - git-committers:
+#      repository: version-cli/docs
+#      branch: main
+
+extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+  consent:
+    title: Cookie consent
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+    actions:
+      - accept
+      - reject
+  version:
+    provider: mike
+  social:
+    # disabled since right now it's not possible to add a label + open the link in the current tab
+    #    - icon: material/cookie-edit
+    #      name: Change cookie settings
+    #      link: "#__consent"
+    - icon: fontawesome/brands/github
+      link: https://github.com/version-cli
+
+exclude_docs: |
+  /includes/*.md
+  /mkdocs-hooks/*
+
+markdown_extensions:
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      auto_append:
+        - docs/includes/abbreviations.md
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.magiclink
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.extra
+  - admonition
+  - pymdownx.details
+  - pymdownx.smartsymbols
+  - pymdownx.saneheaders
+  - toc:
+      permalink: true
