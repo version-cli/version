@@ -122,6 +122,8 @@ jobs:
         run: poetry run mike deploy --push main
         env:
           GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ github.token }}
+          EXCLUDE_SHIELDS_IO_PRIVACY: true
       - name: Deploy release docs
         if: ${{ github.event_name == 'workflow_dispatch' && needs.release.result == 'success' }}
         run: |-
@@ -130,3 +132,4 @@ jobs:
           poetry run mike deploy --push --update-aliases ${{ needs.release.outputs.tag_name }} latest
         env:
           GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ github.token }}

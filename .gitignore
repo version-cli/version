@@ -1,7 +1,8 @@
-.idea/
+/.idea/
 
-dist/
+/dist/
 
 # Ignore version binaries in root project-folder
 /version*
 /.cache/
+/site/

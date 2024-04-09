@@ -1,2 +1,2 @@
-_[CLI]: Command Line Interface
-_[cli]: Command Line Interface
+*[CLI]: Command Line Interface
+*[cli]: Command Line Interface
