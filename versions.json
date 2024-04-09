@@ -13,5 +13,10 @@
     "version": "v0.1.4",
     "title": "v0.1.4",
     "aliases": []
+  },
+  {
+    "version": "v0.1.x",
+    "title": "v0.1.x",
+    "aliases": []
   }
 ]
