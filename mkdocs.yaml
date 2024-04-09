@@ -6,7 +6,7 @@ copyright: >
   Copyright &copy; 2024 version-cli -
   <a href="#__consent">Change cookie settings</a>
 
-strict: true
+strict: false
 
 repo_name: version-cli/version
 repo_url: https://github.com/version-cli/version/
@@ -26,6 +26,8 @@ remote_branch: gh-pages
 
 hooks:
   - docs/mkdocs-hooks/custom-edit-url.py
+  - docs/mkdocs-hooks/relative-src.py
+  - docs/mkdocs-hooks/privacy-exclude-shields-io.py
 
 nav:
   - Home: index.md
@@ -86,16 +88,18 @@ theme:
 
 plugins:
   - search
-  - privacy
+  - privacy:
+      assets_expr_map:
+        ".md": "[\"'](https://(?!img\\.shields\\.io)[^\"']+)[\"']"
   - social:
       cards_layout_options:
         background_color: "#D4AA01"
         color: "#ffffff"
-#  - git-revision-date-localized:
-#      enable_creation_date: true
-#  - git-committers:
-#      repository: version-cli/docs
-#      branch: main
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - git-committers:
+      repository: version-cli/version
+      branch: main
 
 extra:
   analytics:
