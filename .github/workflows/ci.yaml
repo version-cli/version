@@ -89,7 +89,7 @@ jobs:
           FILES: dist/version_*.tar.gz dist/version_*.zip dist/version_*_checksums.txt
 
   docs-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: ${{ always() }}
     needs: release
     permissions:
