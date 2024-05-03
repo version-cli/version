@@ -29,5 +29,9 @@
       matchManagers: ["github-actions"],
       labels: ["semver:none", "kind:chore"],
     },
+    {
+      matchManagers: ["poetry"],
+      rangeStrategy: "pin",
+    },
   ],
 }
