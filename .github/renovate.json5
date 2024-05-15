@@ -1,37 +1,45 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  semanticCommits: "auto",
   extends: ["config:best-practices"],
-  labels: ["semver:patch", "kind:dependencies"],
+  customDatasources: {
+    goreleaser: {
+      defaultRegistryUrlTemplate: "https://goreleaser.com/static/releases.json",
+      transformTemplates: [
+        '{"releases":$.{"version":$.tag_name,"changelogUrl":$join(["https://github.com/goreleaser/goreleaser/releases/tag/",$.tag_name]),"sourceUrl":"https://github.com/goreleaser/goreleaser","homepage":"https://goreleaser.com/"},"sourceUrl":"https://github.com/goreleaser/goreleaser","homepage":"https://goreleaser.com/"}',
+      ],
+    },
+  },
   customManagers: [
     {
+      currentValueTemplate: "nonroot",
       customType: "regex",
+      datasourceTemplate: "docker",
+      depNameTemplate: "gcr.io/distroless/static",
       fileMatch: "^Dockerfile",
       matchStrings: ['ARG BASE_IMAGE_DIGEST="(?<currentDigest>.*)"'],
-      depNameTemplate: "gcr.io/distroless/static",
-      currentValueTemplate: "nonroot",
-      datasourceTemplate: "docker",
     },
     {
       customType: "regex",
       fileMatch: "(^|\\/)(?:workflow-templates|\\.github\\/(?:workflows|actions))\\/.+\\.ya?ml$",
       matchStrings: [
-        "version: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s",
+        "version: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( packageName=(?<packageName>.*?))?\\s",
       ],
     },
   ],
+  labels: ["semver:patch", "kind:dependencies"],
   packageRules: [
     {
-      matchDepNames: "gcr.io/distroless/static",
       groupName: "gcr.io/distroless/static",
+      matchDepNames: "gcr.io/distroless/static",
     },
     {
-      matchManagers: ["github-actions"],
       labels: ["semver:none", "kind:chore"],
+      matchManagers: ["github-actions"],
     },
     {
       matchManagers: ["poetry"],
       rangeStrategy: "pin",
     },
   ],
+  semanticCommits: "auto",
 }
