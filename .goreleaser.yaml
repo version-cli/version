@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
-version: 1
+version: 2
 
 project_name: version
 
@@ -63,7 +63,7 @@ brews:
     commit_author:
       name: version
       email: 8818390+kvanzuijlen@users.noreply.github.com
-    folder: Formula
+    directory: Formula
     install: |-
       bin.install "version"
     test: |
