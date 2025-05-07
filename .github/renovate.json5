@@ -1,11 +1,9 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'config:best-practices',
-  ],
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:best-practices"],
   customDatasources: {
     goreleaser: {
-      defaultRegistryUrlTemplate: 'https://goreleaser.com/static/releases.json',
+      defaultRegistryUrlTemplate: "https://goreleaser.com/static/releases.json",
       transformTemplates: [
         '{"releases":$.{"version":$.tag_name,"changelogUrl":$join(["https://github.com/goreleaser/goreleaser/releases/tag/",$.tag_name]),"sourceUrl":"https://github.com/goreleaser/goreleaser","homepage":"https://goreleaser.com/"},"sourceUrl":"https://github.com/goreleaser/goreleaser","homepage":"https://goreleaser.com/"}',
       ],
@@ -13,51 +11,37 @@
   },
   customManagers: [
     {
-      currentValueTemplate: 'nonroot',
-      customType: 'regex',
-      datasourceTemplate: 'docker',
-      depNameTemplate: 'gcr.io/distroless/static',
-      managerFilePatterns: [
-        '/^Dockerfile/',
-      ],
-      matchStrings: [
-        'ARG BASE_IMAGE_DIGEST="(?<currentDigest>.*)"',
-      ],
+      currentValueTemplate: "nonroot",
+      customType: "regex",
+      datasourceTemplate: "docker",
+      depNameTemplate: "gcr.io/distroless/static",
+      managerFilePatterns: ["/^Dockerfile/"],
+      matchStrings: ['ARG BASE_IMAGE_DIGEST="(?<currentDigest>.*)"'],
     },
     {
-      customType: 'regex',
+      customType: "regex",
       managerFilePatterns: [
-        '/(^|\\/)(?:workflow-templates|\\.github\\/(?:workflows|actions))\\/.+\\.ya?ml$/',
+        "/(^|\\/)(?:workflow-templates|\\.github\\/(?:workflows|actions))\\/.+\\.ya?ml$/",
       ],
       matchStrings: [
-        'version: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( packageName=(?<packageName>.*?))?\\s',
+        "version: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( packageName=(?<packageName>.*?))?\\s",
       ],
     },
   ],
-  labels: [
-    'semver:patch',
-    'kind:dependencies',
-  ],
+  labels: ["semver:patch", "kind:dependencies"],
   packageRules: [
     {
-      groupName: 'gcr.io/distroless/static',
-      matchDepNames: 'gcr.io/distroless/static',
+      groupName: "gcr.io/distroless/static",
+      matchDepNames: "gcr.io/distroless/static",
     },
     {
-      labels: [
-        'semver:none',
-        'kind:chore',
-      ],
-      matchManagers: [
-        'github-actions',
-      ],
+      labels: ["semver:none", "kind:chore"],
+      matchManagers: ["github-actions"],
     },
     {
-      matchManagers: [
-        'poetry',
-      ],
-      rangeStrategy: 'pin',
+      matchManagers: ["poetry"],
+      rangeStrategy: "pin",
     },
   ],
-  semanticCommits: 'auto',
+  semanticCommits: "auto",
 }
