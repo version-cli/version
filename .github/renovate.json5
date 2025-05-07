@@ -15,12 +15,14 @@
       customType: "regex",
       datasourceTemplate: "docker",
       depNameTemplate: "gcr.io/distroless/static",
-      fileMatch: "^Dockerfile",
+      managerFilePatterns: ["/^Dockerfile/"],
       matchStrings: ['ARG BASE_IMAGE_DIGEST="(?<currentDigest>.*)"'],
     },
     {
       customType: "regex",
-      fileMatch: "(^|\\/)(?:workflow-templates|\\.github\\/(?:workflows|actions))\\/.+\\.ya?ml$",
+      managerFilePatterns: [
+        "/(^|\\/)(?:workflow-templates|\\.github\\/(?:workflows|actions))\\/.+\\.ya?ml$/",
+      ],
       matchStrings: [
         "version: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?( packageName=(?<packageName>.*?))?\\s",
       ],
