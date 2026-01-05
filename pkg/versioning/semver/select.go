@@ -6,12 +6,13 @@ package semver
 import (
 	"fmt"
 	"slices"
+	"strings"
 
 	"github.com/coreos/go-semver/semver"
 	"go.uber.org/zap"
 )
 
-func Select(tags []string, count int, versionLevel string) (selectedVersions []*semver.Version) {
+func Select(tags []string, count int, versionLevel string) (selectedVersions []string) {
 	versions := semverSort(tags)
 
 	versionMap := make(map[string]*semver.Version)
@@ -23,13 +24,29 @@ func Select(tags []string, count int, versionLevel string) (selectedVersions []*
 		}
 		if _, exists := versionMap[key]; !exists {
 			versionMap[key] = version
-			selectedVersions = append(selectedVersions, version)
+			selectedVersions = append(selectedVersions, version.String())
 			if len(selectedVersions) == count {
 				break
 			}
 		}
 	}
 	slices.Reverse(selectedVersions)
+	// Check if any of the tags had a 'v' prefix, if so, we should probably return versions with 'v' prefix
+	// This is a heuristic, but it's probably good enough
+	hasVPrefix := false
+	for _, tag := range tags {
+		if strings.HasPrefix(tag, "v") {
+			hasVPrefix = true
+			break
+		}
+	}
+
+	if hasVPrefix {
+		for i, version := range selectedVersions {
+			selectedVersions[i] = "v" + version
+		}
+	}
+
 	return selectedVersions
 }
 
