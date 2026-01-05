@@ -10,14 +10,14 @@ version latest [flags] DEPNAME
 
 ## Flags
 
-| Flag | Shorthand | Description | Required | Default |
-|---|---|---|---|---|
-| `--datasource` | `-d` | Datasource to use | Yes | |
-| `--major` | `-M` | Set version level to major | No | `false` |
-| `--minor` | `-m` | Set version level to minor | No | `false` |
-| `--patch` | `-p` | Set version level to patch | No | `true` |
-| `--count` | `-c` | Number of versions to retrieve | No | `1` |
-| `--semver` | `-S` | Use semver as the versioning type | No | `true` |
+| Flag           | Shorthand | Description                       | Required | Default |
+| -------------- | --------- | --------------------------------- | -------- | ------- |
+| `--datasource` | `-d`      | Datasource to use                 | Yes      |         |
+| `--major`      | `-M`      | Set version level to major        | No       | `false` |
+| `--minor`      | `-m`      | Set version level to minor        | No       | `false` |
+| `--patch`      | `-p`      | Set version level to patch        | No       | `true`  |
+| `--count`      | `-c`      | Number of versions to retrieve    | No       | `1`     |
+| `--semver`     | `-S`      | Use semver as the versioning type | No       | `true`  |
 
 ## Examples
 

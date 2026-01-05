@@ -18,13 +18,13 @@ version next [flags] VERSION
 
 ## Flags
 
-| Flag | Shorthand | Description | Default |
-|---|---|---|---|
-| `--major` | `-M` | Set version level to major | `false` |
-| `--minor` | `-m` | Set version level to minor | `false` |
-| `--patch` | `-p` | Set version level to patch | `true` |
-| `--count` | `-c` | Number of versions to bump | `1` |
-| `--semver` | `-S` | Use semver as the versioning type | `true` |
+| Flag       | Shorthand | Description                       | Default |
+| ---------- | --------- | --------------------------------- | ------- |
+| `--major`  | `-M`      | Set version level to major        | `false` |
+| `--minor`  | `-m`      | Set version level to minor        | `false` |
+| `--patch`  | `-p`      | Set version level to patch        | `true`  |
+| `--count`  | `-c`      | Number of versions to bump        | `1`     |
+| `--semver` | `-S`      | Use semver as the versioning type | `true`  |
 
 ## Examples
 
