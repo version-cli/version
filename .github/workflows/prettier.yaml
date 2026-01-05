@@ -8,22 +8,22 @@ on:
 
 jobs:
   prettier:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           ref: ${{ github.head_ref }} # so PRs resolve to correct branch
           fetch-depth: 0 # needed for only_changed below
           persist-credentials: false
       - name: Create GitHub App Token
         id: app-token
-        uses: actions/create-github-app-token@31c86eb3b33c9b601a1f60f98dcbfd1d70f379b4 # v1.10.3
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
         with:
           app-id: ${{ secrets.VERSION_CLI_UPDATER_APP_ID }}
           private-key: ${{ secrets.VERSION_CLI_UPDATER_PRIVATE_KEY }}
       - name: Prettify code
-        uses: creyD/prettier_action@31355f8eef017f8aeba2e0bc09d8502b13dbbad1 # v4.3
+        uses: creyD/prettier_action@8c18391fdc98ed0d884c6345f03975edac71b8f0 # v4.6
         with:
           commit_message: "Prettier"
           only_changed: True

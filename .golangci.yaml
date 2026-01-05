@@ -1,40 +1,55 @@
-run:
-  deadline: 120s
+# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/golangci.jsonschema.json
+version: "2"
 linters:
+  default: none
   enable:
-    - govet
-    - ineffassign
-    - goconst
-    - gofmt
-    - goimports
-    - gosec
-    - gosimple
-    - staticcheck
-    - typecheck
-    - unused
     - bodyclose
     - dogsled
+    - goconst
+    - gocritic
     - goprintffuncname
+    - gosec
+    - govet
+    - ineffassign
     - misspell
     - prealloc
-    - exportloopref
-    - stylecheck
-    - unconvert
-    - gocritic
     - revive
-  disable-all: true
-issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - scopelint
-        - bodyclose
-        - unconvert
-        - gocritic
-        - gosec
-    # If we have tests in shared test folders, these can be less strictly linted
-    - path: tests/.*_tests\.go
-      linters:
-        - revive
-        - bodyclose
-        - stylecheck
+    - staticcheck
+    - unconvert
+    - unused
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - bodyclose
+          - gocritic
+          - gosec
+          - scopelint
+          - unconvert
+        path: _test\.go
+      - linters:
+          - bodyclose
+          - revive
+          - staticcheck
+        path: tests/.*_tests\.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+run: 
+  timeout: 2m

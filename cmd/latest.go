@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/version-cli/version/pkg/datasource"
 	"github.com/version-cli/version/pkg/versioning/semver"
 
@@ -19,7 +20,7 @@ var (
 		Long: `Retrieves the specified number of latest versions of a dependency from the specified datasource.
 If a different version level is specified, this command will return the latest number of versions of that version level.`,
 		Args: cobra.MatchAll(cobra.ExactArgs(1), cobra.OnlyValidArgs),
-		RunE: func(cmd *cobra.Command, args []string) (err error) {
+		RunE: func(_ *cobra.Command, args []string) (err error) {
 			ds, err := datasource.Get(datasourceName)
 			if err != nil {
 				return err

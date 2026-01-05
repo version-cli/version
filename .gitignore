@@ -6,3 +6,5 @@
 /version*
 /.cache/
 /site/
+# Added by goreleaser init:
+build/
