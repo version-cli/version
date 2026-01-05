@@ -1,0 +1,91 @@
+name: 'Version'
+description: 'A tool to handle version numbers'
+inputs:
+  version:
+    description: 'Explicit version to use (e.g. v0.1.5). Defaults to the action tag.'
+    required: false
+  command:
+    description: 'Command to run (bump or latest)'
+    required: true
+  args:
+    description: 'Arguments to pass to the command'
+    required: true
+outputs:
+  version:
+    description: 'The output of the command'
+    value: ${{ steps.version-cli.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    - name: Download and Install Binary
+      shell: bash
+      env:
+        INPUT_VERSION: ${{ inputs.version }}
+        ACTION_REF: ${{ github.action_ref }}
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        # If input is empty, fall back to the action's pinned tag (e.g., v0.1.5)
+        VERSION="${INPUT_VERSION:-$ACTION_REF}"
+        
+        if [[ "$VERSION" =~ ^[0-9a-f]{40}$ ]]; then
+          echo "::error::When pinning by SHA, you must explicitly provide the 'version' input."
+          echo "Please update your workflow:"
+          echo "  - uses: version-cli/version@$VERSION"
+          echo "    with:"
+          echo "      version: v0.1.5 # <--- Required"
+          exit 1
+        fi
+        
+        if [ -z "$VERSION" ]; then
+          echo "Error: Could not determine version. Please pin the action or provide a version input."
+          exit 1
+        fi
+        
+        echo "Resolved version: $VERSION"
+
+        # --- 2. MAP OS & ARCH ---
+        OS_TYPE=""
+        BINARY_NAME="version"
+        case "$RUNNER_OS" in
+          Linux)   OS_TYPE="Linux" ;;
+          macOS)   OS_TYPE="Darwin" ;;
+          Windows) 
+            OS_TYPE="Windows" 
+            BINARY_NAME="version.exe"
+            ;;
+          *) echo "Unsupported OS: $RUNNER_OS"; exit 1 ;;
+        esac
+
+        ARCH_TYPE=""
+        case "$RUNNER_ARCH" in
+          X64)   ARCH_TYPE="x86_64" ;;
+          ARM64) ARCH_TYPE="arm64" ;;
+          *) echo "Unsupported Arch: $RUNNER_ARCH"; exit 1 ;;
+        esac
+
+        # --- 3. CONSTRUCT URL ---
+        FILENAME="version_${OS_TYPE}_${ARCH_TYPE}.tar.gz"
+        URL="https://github.com/version-cli/version/releases/download/${VERSION}/${FILENAME}"
+        
+        echo "Downloading from: $URL"
+
+        # --- 4. DOWNLOAD & INSTALL ---
+        curl -sLf -H "Authorization: Bearer $GITHUB_TOKEN" "$URL" -o "version.tar.gz"
+
+        mkdir -p "$HOME/.local/bin"
+        
+        tar -xzf "version.tar.gz" -C "$HOME/.local/bin" "$BINARY_NAME"
+
+        # --- 5. UPDATE PATH ---
+        chmod +x "$HOME/.local/bin/$BINARY_NAME"
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Run Version-CLI
+      id: version-cli
+      shell: bash
+      env:
+        COMMAND: ${{ inputs.command }}
+        ARGS: ${{ inputs.args }}
+      run: |
+        OUTPUT=$(version "$COMMAND" $ARGS)
+        echo "version=$OUTPUT" >> $GITHUB_OUTPUT

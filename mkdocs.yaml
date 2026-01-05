@@ -28,6 +28,7 @@ hooks:
   - docs/mkdocs-hooks/custom-edit-url.py
   - docs/mkdocs-hooks/relative-src.py
   - docs/mkdocs-hooks/privacy-exclude-shields-io.py
+  - docs/mkdocs-hooks/replace-version.py
 
 nav:
   - Home: index.md
@@ -36,7 +37,7 @@ nav:
       - Use:
           - getting-started/use/latest_versions.md
           - getting-started/use/bump.md
-      - Optional:
+      - CI/CD:
           - getting-started/github_action.md
 
 theme:
