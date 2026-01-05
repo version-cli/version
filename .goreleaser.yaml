@@ -16,14 +16,6 @@ builds:
       - windows
       - darwin
       - freebsd
-    goarch:
-      - arm64
-      - amd64
-      - arm
-      - "386"
-    goarm:
-      - "6"
-      - "7"
     ldflags:
       - -s -w -X "github.com/version-cli/version/cmd.VERSION={{.Version}}"
 
@@ -31,7 +23,7 @@ checksum:
   disable: false
 
 archives:
-  - format: tar.gz
+  - formats: [ tar.gz ]
     # this name template makes the OS and Arch compatible with the results of `uname`.
     name_template: >-
       {{ .ProjectName }}_
@@ -43,7 +35,7 @@ archives:
     # use zip for windows archives
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [ zip ]
 
 universal_binaries:
   - {}
@@ -51,11 +43,11 @@ universal_binaries:
 changelog:
   disable: true
 
-brews:
-  - repository:
+homebrew_casks:
+  - name: version
+    repository: 
       owner: version-cli
       name: homebrew-version
-    name: version
     homepage: "https://github.com/version-cli/version"
     description: "CLI tool to deal with versions"
     license: "GNU GPLv3"
@@ -63,8 +55,10 @@ brews:
     commit_author:
       name: version
       email: 8818390+kvanzuijlen@users.noreply.github.com
-    directory: Formula
-    install: |-
-      bin.install "version"
-    test: |
-      system "#{bin}/version -v"
+    hooks:
+      post:
+        # replace foo with the actual binary name
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/version"]
+          end
