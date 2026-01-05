@@ -24,11 +24,11 @@ func (docker *Docker) Latest(repositoryName string) (tags []string, err error) {
 	}
 	tags, err = listTags(repository)
 	if err != nil {
-		// TODO: handle error
+		zap.L().Error("Problem while retrieving tags", zap.String("repository", repositoryName))
 		return nil, fmt.Errorf("problem while retrieving tags for %s", repositoryName)
 	}
 	if len(tags) == 0 {
-		// TODO: log message
+		zap.L().Error("Couldn't find any tags", zap.String("repository", repositoryName))
 		return nil, fmt.Errorf("couldn't find any tags")
 	}
 	return tags, nil

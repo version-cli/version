@@ -1,23 +1,7 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["config:best-practices"],
-  customDatasources: {
-    goreleaser: {
-      defaultRegistryUrlTemplate: "https://goreleaser.com/static/releases.json",
-      transformTemplates: [
-        '{"releases":$.{"version":$.tag_name,"changelogUrl":$join(["https://github.com/goreleaser/goreleaser/releases/tag/",$.tag_name]),"sourceUrl":"https://github.com/goreleaser/goreleaser","homepage":"https://goreleaser.com/"},"sourceUrl":"https://github.com/goreleaser/goreleaser","homepage":"https://goreleaser.com/"}',
-      ],
-    },
-  },
   customManagers: [
-    {
-      currentValueTemplate: "nonroot",
-      customType: "regex",
-      datasourceTemplate: "docker",
-      depNameTemplate: "gcr.io/distroless/static",
-      fileMatch: "^Dockerfile",
-      matchStrings: ['ARG BASE_IMAGE_DIGEST="(?<currentDigest>.*)"'],
-    },
     {
       customType: "regex",
       fileMatch: "(^|\\/)(?:workflow-templates|\\.github\\/(?:workflows|actions))\\/.+\\.ya?ml$",

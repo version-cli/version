@@ -5,6 +5,7 @@ package datasource
 
 import (
 	"errors"
+
 	"go.uber.org/zap"
 )
 
@@ -17,7 +18,8 @@ type Datasource struct {
 
 func Get(datasource string) (IDatasource, error) {
 	datasources := map[string]func() IDatasource{
-		"docker": func() IDatasource { return &Docker{} },
+		"docker":      func() IDatasource { return &Docker{} },
+		"github-tags": func() IDatasource { return &GithubTags{} },
 	}
 	datasourceFactory, exists := datasources[datasource]
 	if !exists {
