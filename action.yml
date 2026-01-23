@@ -87,5 +87,8 @@ runs:
         COMMAND: ${{ inputs.command }}
         ARGS: ${{ inputs.args }}
       run: |
-        OUTPUT=$(version "$COMMAND" $ARGS)
-        echo "version=$OUTPUT" >> $GITHUB_OUTPUT
+        {
+          echo "version<<EOF"
+          version "$COMMAND" $ARGS
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
