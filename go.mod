@@ -2,7 +2,7 @@ module github.com/version-cli/version
 
 go 1.24.0
 
-toolchain go1.25.5
+toolchain go1.27.1
 
 require (
 	github.com/coreos/go-semver v0.3.1
