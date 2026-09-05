@@ -152,7 +152,7 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
       - name: Install Poetry
         env:
-          poetry_version: 2.2.1 # renovate: datasource=github-tags depName=poetry packageName=python-poetry/poetry
+          poetry_version: 2.4.3 # renovate: datasource=github-tags depName=poetry packageName=python-poetry/poetry
         run: pipx install poetry==$poetry_version
       - uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
         with:
